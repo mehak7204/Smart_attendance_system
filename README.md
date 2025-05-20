@@ -3,8 +3,7 @@
 A Django-based Smart Attendance System that simplifies and automates the process of marking and managing attendance using modern web technologies.
 
 ## 📌 Features
-
-- 📷 Face recognition/selfie capture for attendance
+- 📲 QR code-based attendance with time limit
 - 👥 User-friendly interface for both students and admins
 - 📊 Dashboard with attendance statistics
 - 🔐 Secure login & role-based access
