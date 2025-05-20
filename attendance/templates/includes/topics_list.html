@@ -1,0 +1,13 @@
+<ul class="topics-list" id="sortable-topics">
+    {% for topic in topics %}
+        <li data-topic-id="{{ topic.id }}">
+            <i class="fas fa-arrows-alt"></i>
+            <span class="topic-title">{{ topic.title }}</span>
+            <div class="topic-actions">
+                <a href="{% url 'topic_detail' topic.pk %}" class="btn btn-view">View</a>
+                <a href="{% url 'update_topic' topic.pk %}" class="btn btn-update">Update</a>
+                <a href="{% url 'delete_topic' topic.pk %}" class="btn btn-delete">Delete</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

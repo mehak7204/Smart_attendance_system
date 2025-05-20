@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .countdown {
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Attendance Already Submitted</h1>
+    <p>Please wait before submitting again.</p>
+    <div class="countdown">
+        Time remaining: <span id="countdown">{{ minutes_left }}:{{ seconds_left }}</span>
+    </div>
+
+    <script>
+        let minutes = {{ minutes_left }};
+        let seconds = {{ seconds_left }};
+
+        function updateCountdown() {
+            if (seconds === 0) {
+                if (minutes > 0) {
+                    minutes -= 1;
+                    seconds = 59;
+                }
+            } else {
+                seconds -= 1;
+            }
+
+            document.getElementById("countdown").textContent =
+                String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+
+            if (minutes > 0 || seconds > 0) {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>

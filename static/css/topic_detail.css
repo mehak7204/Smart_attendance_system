@@ -1,0 +1,215 @@
+/* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffe0e0;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            margin-top:5px;
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .actions {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .actions .btn {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #f8b400;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .actions .btn-attendance {
+            background-color: #5e227f;
+        }
+
+        .actions .btn-dashboard {
+            background-color: #272e4f;
+        }
+
+        .actions .btn-manual {
+            background-color: #4850b9; /* Dark gray, change as needed */
+        }
+
+        .actions .btn:hover {
+            opacity: 0.8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+       
+
+        /* CSS for sorting icons */
+        .sort-icon {
+            margin-left: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .sort-icon.desc {
+            transform: rotate(180deg);
+        }
+
+        /* CSS for reset icon */
+        .reset-icon {
+            float: right;
+            cursor: pointer;
+            color: #007bff;
+            transition: transform 0.3s ease;
+        }
+
+        .reset-icon:hover {
+            color: #0056b3;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center; /* Center items vertically */
+            box-shadow: 2px 2px black;
+            width:20%;
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style for the download icon */
+        .btn-download i {
+            margin-right: 5px;
+        }
+
+        /* CSS for success message popup */
+        .success-popup {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .entry-section {
+            display: none;
+        }
+        .entry-section.active {
+            display: table-row-group;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #6b4897;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .pagination button:hover {
+            background-color: #6b4897;
+        }
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .pagination button:hover:enabled {
+            background-color: #6b4897;
+        }
+        #search-box-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #search-box {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+        }
+
+        #search-box:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        ::placeholder {
+            color: #aaa;
+        }
+

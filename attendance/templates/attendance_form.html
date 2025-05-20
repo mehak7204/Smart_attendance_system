@@ -1,0 +1,289 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Submit Attendance</title>
+    <link rel="stylesheet" href="{% static 'css/attendance_form.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+            overflow:hidden;
+        }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire background */
+            z-index: -1; /* Place the video behind all other content */
+        }
+        .container
+        {
+            width:100%;
+            background-color: #dae7f2;
+            color:#20463e;
+            box-shadow: 10px 10px 10px #484242;
+        }
+           header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                background-color:white;
+                box-shadow:0px 6px 6px #283643;
+            }
+            h1{
+                color:#01201a;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                width: calc(100% - 22px);
+                padding: 10px;
+                margin-top:10px;
+                margin-bottom:20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            button.submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            color: #283643;
+            background-color: #f89edd;
+            font-weight:bolder;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button.submit-btn:hover {
+            background-color: #d45aaf;
+        }
+
+        /* Simple style for "Take Selfie" button */
+    #take-selfie-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        color: #fff;
+        background-color: #1CC09F;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-bottom: 20px;
+        text-align: center;
+        justify-content:center;
+    }
+    #take-selfie-btn i {
+    margin-right: 8px; /* Adjust the space between the icon and the text */
+}
+
+    #take-selfie-btn:hover {
+        background-color: #129177;
+    }
+
+    /* Grid layout for video and selfie preview */
+    .form-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+        gap: 10px; /* Space between the columns */
+        margin-bottom: 20px;
+    }
+
+    #video, #selfie-preview {
+        width: 100%;
+        height: auto;
+        max-height: 150px; /* Limit the height */
+        border: 2px solid #1CC09F;
+        border-radius: 5px;
+        object-fit: cover; /* Ensure the video and preview fit within the given space */
+    }
+
+         .error-popup {
+            position: relative;
+            background-color: white;
+            color: red;
+            padding: 5px 10px;
+            width:50%;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            margin-left: 100px;
+            top:-90px;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+            footer {
+                background-color: #481153;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 5px 5px;
+                height:7%;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        </style>
+</head>
+<body>
+<video class="background-video" autoplay muted loop>
+        <source src="{% static 'img/animated_bgvideo.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+<header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+     <div class="container">
+        <h1>Submit Attendance for {{ topic.title }}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="form-group">
+            <label for="id_name">Name:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="error-popup" id="name-error">{{ form.name.errors|striptags }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Roll Number Field -->
+        <div class="form-group">
+            <label for="id_roll_number">Roll Number:</label>
+            {{ form.roll_number }}
+            {% if form.roll_number.errors %}
+                <div class="error-popup" id="rollnumber-error">{{ form.roll_number.errors|striptags }}</div>
+            {% endif %}
+        </div>
+
+
+<!--            <button type="button" id="take-selfie-btn" class="btn btn-secondary"><i class="fas fa-camera"></i>Take Selfie</button>-->
+<!--    <div class="form-group">-->
+<!--        <video id="video" width="320" height="240" autoplay></video>-->
+<!--        <canvas id="canvas" style="display: none;"></canvas>-->
+<!--        <img id="selfie-preview" style="display:none;" alt="Selfie Preview">-->
+<!--    </div>-->
+
+    <input type="hidden" name="selfie" id="selfie-input">
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar under the guidance of Dr. Ramakrishna Akella, Principal, KLH Aziznagar Campus in collaboration with KL University Hyderabad</p>
+    </footer>
+<script>
+    document.getElementById('take-selfie-btn').addEventListener('click', function() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const selfieInput = document.getElementById('selfie-input');
+        const selfiePreview = document.getElementById('selfie-preview');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+
+                video.addEventListener('playing', () => {
+                    const context = canvas.getContext('2d');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    const dataURL = canvas.toDataURL('image/png');
+                    selfiePreview.src = dataURL;
+                    selfiePreview.style.display = 'block';
+
+                    // Convert the base64 data URL to a Blob
+                    const blob = dataURLToBlob(dataURL);
+
+                    // Convert Blob to a File
+                    const file = new File([blob], "selfie.png", { type: 'image/png' });
+
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    selfieInput.files = dataTransfer.files;
+
+                    // Logging to check the process
+                    console.log("Selfie captured and converted to file:");
+                    console.log(file);
+                    console.log("Input element contains:");
+                    console.log(selfieInput.files);
+                });
+            })
+            .catch(function(error) {
+                console.error("Error accessing camera: ", error);
+            });
+    });
+
+    function dataURLToBlob(dataURL) {
+        const binary = atob(dataURL.split(',')[1]);
+        const array = [];
+        for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], { type: 'image/png' });
+    }
+
+    const nameInput = document.querySelector("#id_name");
+    const rollNumberInput = document.querySelector("#id_roll_number");
+    const nameError = document.querySelector("#name-error");
+    const rollNumberError = document.querySelector("#rollnumber-error");
+
+    // Function to prevent invalid characters for the Name field
+    nameInput.addEventListener('keydown', function(event) {
+        const invalidChars = /[^a-zA-Z\s]/; // Only allow letters and spaces
+        const key = String.fromCharCode(event.keyCode);
+
+        if (invalidChars.test(key)) {
+            event.preventDefault(); // Prevent invalid keypress
+            nameError.textContent = "Only letters are allowed!";
+            nameError.style.display = "block";
+        } else {
+            nameError.style.display = "none";
+        }
+    });
+
+    // Function to prevent invalid characters for the Roll Number field
+    rollNumberInput.addEventListener('keydown', function(event) {
+        const invalidChars = /[^0-9]/; // Only allow numbers
+        const key = String.fromCharCode(event.keyCode);
+
+        if (invalidChars.test(key)) {
+            event.preventDefault(); // Prevent invalid keypress
+            rollNumberError.textContent = "Only numbers are allowed!";
+            rollNumberError.style.display = "block";
+        } else {
+            rollNumberError.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>

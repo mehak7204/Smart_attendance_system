@@ -1,0 +1,159 @@
+<!-- attendance/templates/login.html -->
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification Error</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+        body {
+            margin: 0;
+            animation: gradientAnimation 15s ease infinite;
+            font-family: Arial, sans-serif;
+            color: #1CC09F;
+            overflow: hidden; /* Prevent scrollbars */
+            position: relative;
+        }
+.background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire background */
+            z-index: -1; /* Place the video behind all other content */
+        }
+           header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+            h1 {
+                margin-bottom: 30px;
+                color: #01201a;
+            }
+
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                background-color:white;
+                box-shadow:0px 6px 6px #283643;
+            }
+            .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 0;
+        }
+        .register-link {
+                font-size: 16px;
+                font-weight:bold;
+                color: #02066f;
+                text-decoration: none;
+            }
+
+            .register-link:hover {
+                text-decoration: underline;
+            }
+            .container {
+                text-align: center;
+                background: #dae7f2;
+                color: #20463e;
+                padding: 50px;
+                border-radius: 10px;
+                box-shadow: 10px 10px 10px #484242;
+                max-width: 400px;
+                width: 100%;
+            }
+            input[type="text"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                font-size:20px;
+                margin-top: 5px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #283643;
+                background-color: #f89edd;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn:hover {
+                background-color: #d45aaf;
+            }
+
+
+            footer {
+                background-color: #481153;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 5px 5px;
+                height:7%;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+            .messages {
+                list-style: none;
+                padding: 0;
+                margin-bottom: 20px;
+                color:red;
+            }
+
+            .messages li {
+                font-size:25px;
+<!--                font-weight:bold;-->
+                color: red;
+                margin-bottom: 10px;
+            }
+
+            .fa-home{
+                color:#001882;
+            }
+        </style>
+</head>
+<body>
+<video class="background-video" autoplay muted loop>
+        <source src="{% static 'img/animated_bgvideo.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+<header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+    <div class="container">
+        Error in Email verification ⚠️<br><br>
+        <a href="{% url 'home' %}">Back to Home
+    </a>
+    </div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar under the guidance of Dr. Ramakrishna Akella, Principal, KLH Aziznagar Campus in collaboration with KL University Hyderabad</p>
+    </footer>
+</body>
+</html>

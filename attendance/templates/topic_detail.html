@@ -1,0 +1,847 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ topic.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/topic_detail.css' %}">
+    <style>
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+        }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire background */
+            z-index: -1; /* Place the video behind all other content */
+        }
+        .btn-download
+        {
+        width:20%;
+        }
+         .container {
+            background-color: #dae7f2;
+            color:#20463e;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1300px;
+            width: 90%;
+            height: 75vh;
+            overflow-y: auto; /* Enable vertical scrolling */
+            box-shadow: 2px 2px #155263;
+            margin-top: -50px;
+            margin-left: 150px;
+        }
+        ::placeholder {
+            color: #aaa;
+        }
+        header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+            h1 {
+            margin-bottom: 30px;
+            color: #01201a;
+            font-size:30px;
+            font-weight:bolder;
+            position:relative;
+            bottom:40px;
+        }
+        h2
+        {
+            color: #1CC09F;
+            font-size:30px;
+            font-weight:bolder;
+        }
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                background-color:white;
+                box-shadow:0px 6px 6px #283643;
+            }
+            th{
+            color:#000;
+            }
+            table tbody tr:nth-child(even) {
+            background-color: #3c5c78;
+            color:#fff;
+        }
+         table tbody tr:hover {
+            background-color: #76a4cc;
+        }
+            .actions {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .actions .btn {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #f8b400;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position:relative;
+            bottom:50px;
+        }
+        .actions .btn-attendance {
+            background-color: #5e227f;
+        }
+
+        .actions .btn-dashboard {
+            background-color: #ff9a3c;
+        }
+
+        .actions .btn-manual {
+            background-color: #4850b9; /* Dark gray, change as needed */
+        }
+
+        .actions .btn:hover {
+            opacity: 0.8;
+        }
+
+        .fas
+        {
+        margin-right:8px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #f5f5f5;
+            background-color: #22267b;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center; /* Center items vertically */
+            box-shadow: 2px 2px black;
+            width:12%;
+            height:30px;
+            justify-content:center;
+            position:relative;
+            bottom:50px;
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: scale(1.01);
+        }
+
+        /* Style for the download icon */
+        .btn-download i {
+            margin-right: 5px;
+        }
+
+        #search-box-container {
+            position: relative;
+            margin-bottom: 20px;
+            position:relative;
+            bottom:50px;
+            color:#283643;
+        }
+        h2{
+            color:#c81d1d;
+            position:relative;
+            bottom:50px;
+        }
+        #search-box {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #283643;
+            cursor: pointer;
+        }
+
+        #search-box:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        ::placeholder {
+            color: #aaa;
+        }
+        #total-entries
+        {
+            position:relative;
+            bottom:50px;
+        }
+        table{
+            position:relative;
+            bottom:50px;
+        }
+
+        .pagination {
+            text-align: center;
+<!--            margin-top: 20px;-->
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #6b4897;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position:relative;
+            bottom:50px;
+        }
+        .pagination button:hover {
+            background-color: #6b4897;
+        }
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .pagination button:hover:enabled {
+            background-color: #6b4897;
+        }
+        #section-number
+        {
+        position:relative;
+        bottom:50px;
+        }
+        /* Your existing styles here */
+    #entries-table img {
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: cover;
+    }
+          footer {
+                background-color: #481153;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 5px 5px;
+                height:7%;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+            .fas-edit
+            {
+
+            }
+.btn-delete {
+    padding: 5px 10px;
+    font-size: 10px;
+    color: #fff;
+    background-color: #d9534f; /* Red color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c9302c;
+}
+
+#print-table
+{
+background-color: #08682b;
+}
+#print-table:hover
+{
+background-color: #034019;
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Save Button */
+.btn-save {
+    background-color: #2196F3; /* Blue */
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #0b7dda; /* Darker blue on hover */
+}
+
+/* Cancel Button */
+.btn-cancel {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
+/* Styles for the "Add and Compare" button */
+#add-compare-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for size */
+    font-size: 16px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+#add-compare-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow */
+    transform: scale(1.05); /* Slightly enlarge */
+}
+
+/* Styles for the "Upload File" input */
+#upload-modal {
+    background: rgba(255, 255, 255, 0.95); /* Light background with transparency */
+    padding: 20px; /* Padding for spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    text-align: center; /* Center align text */
+    position:relative;
+    bottom:80px;
+}
+
+#compare-file {
+    display: inline-block;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: border 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+#compare-file:hover {
+    border-color: #4CAF50; /* Green border on hover */
+    background-color: #f9f9f9; /* Subtle background change */
+}
+
+/* Styles for the "Generate Report" button */
+#generate-report-btn {
+    background-color: #007BFF; /* Blue background */
+    margin-left: 10px;
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding for size */
+    font-size: 16px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: not-allowed; /* Default cursor (disabled) */
+    opacity: 0.6; /* Disabled look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+#generate-report-btn:enabled {
+    cursor: pointer; /* Enable pointer cursor when active */
+    opacity: 1; /* Remove disabled look */
+    background-color: #0056b3; /* Darker blue */
+}
+
+#generate-report-btn:enabled:hover {
+    background-color: #004085; /* Even darker blue on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhance shadow */
+    transform: scale(1.05); /* Slightly enlarge */
+}
+
+
+    </style>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<video class="background-video" autoplay muted loop>
+        <source src="{% static 'img/animated_bgvideo.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+<header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+<div class="container">
+    <h1 id="topic-name">{{ topic.title }}</h1>
+    <div class="actions">
+        <a href="{% url 'generate_qr_code' topic.id %}" class="btn btn-attendance"><i class="fas fa-play"></i>Start Taking Attendance</a>
+        <a href="{% url 'add_manual_entry' topic.id %}" class="btn btn-manual"><i class="fas fa-book"></i>Add Manually</a> <!-- Add manually button -->
+        <a href="#" class="btn btn-print" id="print-table"><i class="fas fa-print"></i> Print</a>
+        <a href="{% url 'dashboard' %}" class="btn btn-dashboard"><i class="fas fa-arrow-left"></i>Back to Dashboard</a>
+    </div>
+
+
+    <!-- Search form -->
+    <div id="search-box-container">
+            <input type="text" id="search-box" placeholder="Search by name or roll number">
+            <i id="search-icon" class="fas fa-search"></i>
+        </div>
+
+    <div class="actions">
+        <input type="hidden" id="topic-id" value="{{ topic.id }}">
+    <button class="btn" id="add-compare-btn">Add and Compare</button>
+</div>
+
+<div id="upload-modal" style="display: none;">
+    <input type="file" id="compare-file" accept=".xlsx" />
+    <button class="btn" id="generate-report-btn" disabled>Generate Report</button>
+</div>
+
+
+    <!-- Add this button to your template -->
+    <div class="btn-group">
+            <a href="{% url 'download_topic_details_as_csv' topic.id %}" class="btn btn-download"> <i class="fas fa-download"></i>Download CSV</a>
+        </div>
+
+    <h2><i class="fas fa-edit"></i> Attendance Entries</h2>
+    <p id="total-entries"><i class="fas fa-bars"></i> Total Entries: {{ topic.attendanceentry_set.count }} <th><i id="reset-icon" class="fa fa-sync reset-icon" aria-hidden="true" title="Click to show default arrangement"></i></th></p>
+     <table id="entries-table">
+        <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>Name <i id="sort-name-icon" class="fa fa-sort" aria-hidden="true" title="Click to sort based on name"></i></th>
+            <th>Roll Number <i id="sort-roll-icon" class="fa fa-sort" aria-hidden="true" title="Click to sort based on roll number"></i></th>
+            <th class="editdel">Edit/Delete</th>
+<!--            <th>Selfie</th>-->
+        </tr>
+        </thead>
+        <tbody id="entries-tbody">
+    {% for entry in topic.attendanceentry_set.all %}
+    <tr class="entry-row">
+        <td>{{ forloop.counter }}</td>
+        <td class="name" data-id="{{ entry.id }}">{{ entry.name }}</td>
+        <td class="roll-no" data-id="{{ entry.id }}">{{ entry.roll_number }}</td>
+        <td class="func">
+            <button class="btn btn-edit" data-entry-id="{{ entry.id }}">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn btn-save" data-entry-id="{{ entry.id }}" style="display:none;">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="btn btn-cancel" data-entry-id="{{ entry.id }}" style="display:none;">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="btn btn-delete" data-entry-id="{{ entry.id }}">
+                <i class="fas fa-trash"></i></button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+    </table>
+    <div class="pagination">
+    <button id="prev-btn" {% if not prev_page %}disabled{% endif %}>
+        <i class="fas fa-arrow-left"></i> Prev
+    </button>
+    <span id="section-number"></span>
+    <button id="next-btn" {% if not next_page %}disabled{% endif %}>
+        Next <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+</div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar under the guidance of Dr. Ramakrishna Akella, Principal, KLH Aziznagar Campus in collaboration with KL University Hyderabad</p>
+    </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/topic_detail.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        const entriesPerPage = 20;
+        const totalEntries = $(".entry-row").length;
+        const totalPages = Math.ceil(totalEntries / entriesPerPage);
+        let currentPage = 1;
+
+        function showPage(page) {
+            $(".entry-row").hide();
+            $(".entry-row").slice((page - 1) * entriesPerPage, page * entriesPerPage).show();
+            $("#section-number").text("Section " + page + " of " + totalPages);
+
+            // Disable prev button on the first page
+            if (page === 1) {
+                $("#prev-btn").prop('disabled', true);
+            } else {
+                $("#prev-btn").prop('disabled', false);
+            }
+
+            // Disable next button on the last page
+            if (page === totalPages) {
+                $("#next-btn").prop('disabled', true);
+            } else {
+                $("#next-btn").prop('disabled', false);
+            }
+        }
+
+        $("#prev-btn").click(function () {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        $("#next-btn").click(function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        showPage(currentPage);
+
+        // Function to sort entries based on roll number
+        $("#sort-roll-icon").click(function () {
+            var entries = $(".entry-row");
+            entries.sort(function (a, b) {
+                var rollA = parseInt($(a).find("td:eq(2)").text());
+                var rollB = parseInt($(b).find("td:eq(2)").text());
+                return rollA - rollB;
+            });
+            $("#entries-table tbody").empty().append(entries);
+            $("#sort-name-icon").removeClass("desc");
+            $(this).toggleClass("desc");
+        });
+
+        // Function to sort entries based on name
+        $("#sort-name-icon").click(function () {
+            var entries = $(".entry-row");
+            entries.sort(function (a, b) {
+                var nameA = $(a).find("td:eq(1)").text().toUpperCase();
+                var nameB = $(b).find("td:eq(1)").text().toUpperCase();
+                return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+            });
+            $("#entries-table tbody").empty().append(entries);
+            $("#sort-roll-icon").removeClass("desc");
+            $(this).toggleClass("desc");
+        });
+
+        // Function to reset sorting to default
+        $("#reset-icon").click(function () {
+            location.reload();
+        });
+
+        // Handling success message display
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('success') && urlParams.get('success') === 'true') {
+            $('#success-popup').fadeIn().delay(5000).fadeOut();
+        }
+
+        // Handle CSV download button click
+        $("#download-csv").click(function () {
+            var topicId = "{{ topic.id }}";
+            window.location.href = `/attendance/${topicId}/download-csv/`;
+        });
+
+         $("#search-box").on("input", function () {
+            var query = $(this).val().toLowerCase().trim(); // Get the search query
+            $(".entry-row").each(function () {
+                var name = $(this).find("td:eq(1)").text().toLowerCase().trim(); // Get name in lowercase
+                var rollNumber = $(this).find("td:eq(2)").text().toLowerCase().trim(); // Get roll number in lowercase
+                if (name.includes(query) || rollNumber.includes(query)) {
+                    $(this).show(); // Show row if matches query
+                } else {
+                    $(this).hide(); // Hide row if does not match query
+                }
+            });
+        });
+    });
+
+
+
+$(document).on('click', '.btn-delete', function () {
+    const entryId = $(this).data('entry-id'); // Get the entry ID from the data attribute
+    const row = $(this).closest('tr'); // Get the table row element
+
+    if (confirm('Are you sure you want to delete this entry?')) {
+        $.ajax({
+            url: `/attendance/delete-entry/${entryId}/`, // Adjust the URL path as per your project
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}', // Add CSRF token
+            },
+            success: function (response) {
+                if (response.success) {
+                    row.fadeOut(500, function () {
+                        $(this).remove(); // Remove the row after fading out
+                    });
+                    alert('Entry deleted successfully.');
+                } else {
+                    alert('Failed to delete entry.');
+                }
+            },
+            error: function () {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    }
+});
+
+$(document).ready(function () {
+    $("#print-table").click(function (e) {
+        e.preventDefault();
+
+        // Save current pagination state
+        const originalEntries = $(".entry-row").clone();
+        const originalPagination = $(".pagination").clone();
+
+        // Show all rows for printing
+        $(".entry-row").show();
+        $(".pagination").hide();
+
+        // Create a print window
+        const topicName = $("#topic-name").text(); // Assuming there's an element with the topic name
+        const printWindow = window.open("", "_blank");
+        const printContents = `
+            <html>
+            <head>
+                <title>${topicName}</title>
+                <style>
+                    @media print {
+                    .btn-edit, .btn-delete, .func, .editdel {
+        display: none !important;
+    }
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            padding: 0;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        th, td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                            color: #333;
+                        }
+                        tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                        }
+                        #watermark {
+                            position: fixed;
+                            bottom: 10px;
+                            right: 10px;
+                            font-size: 14px;
+                            color: rgba(0, 0, 0, 0.5);
+                            text-align: right;
+                        }
+                        #topic {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div id="topic">
+                    <h1>${topicName}</h1>
+                </div>
+                <table>
+                    ${$("#entries-table").html()}
+                </table>
+                <div id="watermark">Data is taken from Smart Attendance System ©</div>
+            </body>
+            </html>
+        `;
+
+        // Write the table to the new window
+        printWindow.document.open();
+        printWindow.document.write(printContents);
+        printWindow.document.close();
+
+        // Trigger print
+        printWindow.print();
+
+        // Restore original pagination and rows
+        $(".entries-tbody").html(originalEntries);
+        $(".pagination").replaceWith(originalPagination);
+    });
+});
+
+$(document).ready(function () {
+    // Handle Edit Button click
+    $(".btn-edit").click(function () {
+        const row = $(this).closest("tr"); // Get the row of the button
+        const nameCell = row.find(".name");
+        const rollCell = row.find(".roll-no");
+
+        // Get original values before editing
+        const originalName = nameCell.text();
+        const originalRoll = rollCell.text();
+
+        // Store the original values in the data-* attributes
+        nameCell.data("original-name", originalName);
+        rollCell.data("original-roll", originalRoll);
+
+        // Make the name and roll number editable by replacing them with input fields
+        nameCell.html(`<input type="text" class="edit-input" value="${originalName}" />`);
+        rollCell.html(`<input type="text" class="edit-input" value="${originalRoll}" />`);
+
+        // Show the Save and Cancel buttons
+        row.find(".btn-save").show();
+        row.find(".btn-cancel").show();
+        row.find(".btn-edit").hide();
+    });
+
+    // Handle Save Button click
+    $(".btn-save").click(function () {
+        const row = $(this).closest("tr"); // Get the row of the button
+        const entryId = $(this).data("entry-id");
+
+        const newName = row.find(".name .edit-input").val();
+        const newRoll = row.find(".roll-no .edit-input").val();
+
+        // Send an AJAX request to save the changes
+        $.ajax({
+            url: `/attendance/update-entry/${entryId}/`,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                name: newName,
+                roll_number: newRoll
+            },
+            success: function (response) {
+                if (response.success) {
+                    // Update the table with the new values
+                    row.find(".name").text(newName);
+                    row.find(".roll-no").text(newRoll);
+
+                    // Hide the Save and Cancel buttons, show the Edit button again
+                    row.find(".btn-save").hide();
+                    row.find(".btn-cancel").hide();
+                    row.find(".btn-edit").show();
+                } else {
+                    alert('Failed to save changes.');
+                }
+            },
+            error: function () {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+
+    // Handle Cancel Button click
+    $(".btn-cancel").click(function () {
+        const row = $(this).closest("tr"); // Get the row of the button
+
+        // Get the original values from the data-* attributes
+        const originalName = row.find(".name").data("original-name");
+        const originalRoll = row.find(".roll-no").data("original-roll");
+
+        // Restore original values in the table
+        row.find(".name").text(originalName);
+        row.find(".roll-no").text(originalRoll);
+
+        // Hide the Save and Cancel buttons, show the Edit button again
+        row.find(".btn-save").hide();
+        row.find(".btn-cancel").hide();
+        row.find(".btn-edit").show();
+    });
+});
+
+$(document).ready(function () {
+    // Show upload modal on button click
+    $("#add-compare-btn").click(function () {
+    $(this).hide();
+        $("#upload-modal").fadeIn();
+    });
+
+    // Handle file upload
+    $("#compare-file").change(function () {
+        const file = this.files[0];
+        if (file && file.name.endsWith(".xlsx")) {
+            $("#generate-report-btn").prop("disabled", false);
+        } else {
+            alert("Please upload a valid Excel file (.xlsx).");
+            $("#generate-report-btn").prop("disabled", true);
+        }
+    });
+
+    // Handle "Generate Report" button click
+    $("#generate-report-btn").click(function () {
+        const file = $("#compare-file")[0].files[0];
+        const topicId = $("#topic-id").val(); // Get the topic ID from a hidden field or from the DOM
+
+        if (file && topicId) {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+            // Send the file to the server for processing
+            $.ajax({
+                url: `/attendance/compare/${topicId}/`, // Pass the topic_id in the URL
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log(response);  // Log the response from the server to see the details
+
+                    if (response.success) {
+                        // Redirect to the report page with the valid report ID
+                        window.location.href = `/attendance/report/${response.report_id}/`;
+                    } else {
+                        alert(response.error || "Failed to process the file.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error details:", status, error);  // Log error details in the console
+                    alert("An error occurred while processing the file.");
+                }
+            });
+        } else {
+            alert("Please upload a valid file and ensure topic ID is provided.");
+        }
+    });
+});
+
+
+
+</script>
+</body>
+</html>

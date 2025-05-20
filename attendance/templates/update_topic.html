@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Topic</title>
+    <link rel="stylesheet" href="{% static 'css/update_topic.css' %}">
+    <style>
+    body
+    {
+        background: linear-gradient(135deg, #0E9F7A, #1CC09F, #68D1A6, #133E37);
+    }
+    .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire background */
+            z-index: -1; /* Place the video behind all other content */
+        }
+    .container{
+        background-color: #dae7f2;
+            color:#20463e;
+    }
+    h2 {
+    margin-bottom: 30px;
+    color: #01201a;
+    }
+    .form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    color: #1CC09F;
+    }
+    .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #1CC09F;
+    font-size:20px;
+}
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size:25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+           header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                background-color:white;
+                box-shadow:0px 6px 6px #283643;
+            }
+            footer {
+                background-color: #481153;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 5px 5px;
+                height:7%;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        </style>
+</head>
+<body>
+<video class="background-video" autoplay muted loop>
+        <source src="{% static 'img/animated_bgvideo.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+<header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+        </header>
+     <div class="container">
+        <h2>Update Topic</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Save</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-back">Cancel</a>
+            </div>
+        </form>
+    </div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar under the guidance of Dr. Ramakrishna Akella, Principal, KLH Aziznagar Campus in collaboration with KL University Hyderabad</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="toggle-btn" id="dark-mode-toggle">
+        <i class="fas fa-sun"></i>
+    </div>
+    {% block content %}
+    {% endblock %}
+        <script src="{% static 'js/dark-mode-toggle.js' %}"></script>
+
+</body>
+</html>

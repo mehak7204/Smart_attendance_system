@@ -1,0 +1,466 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comparison Report</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100vh;
+        }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire background */
+            z-index: -1; /* Place the video behind all other content */
+        }
+        header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                box-sizing: border-box;
+           }
+
+            header .logo {
+                position: relative;
+                top: 10px;
+                left: 20px;
+                width: 150px;
+                height: auto;
+                background-color:white;
+                box-shadow:0px 6px 6px #283643;
+            }
+        .container {
+            text-align: center;
+            background-color: #dae7f2;
+            color:#20463e;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 1500px;
+            width: 100%;
+            height:85vh;
+            overflow-y:auto;
+            position: relative;
+            box-shadow: 2px 2px #155263;
+            margin-top:0px;
+            margin-left:150px;
+        }
+        /* Page title */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #4CAF50;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Section headings */
+h2 {
+    font-size: 24px;
+    color: #34495e;
+    margin-bottom: 10px;
+    text-align: left;
+    padding-left: 15px;
+    border-left: 5px solid #4CAF50;
+    margin-top: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Count for IDs */
+.count {
+    font-size: 18px;
+    color: #4CAF50;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* List container */
+ul {
+    list-style-type: none; /* Remove default bullets */
+    margin: 20px auto;
+    padding: 0;
+    max-width: 700px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Keeps borders clean */
+    border-left: 4px solid #4CAF50;
+}
+
+/* List items */
+ul li {
+    padding: 15px 20px;
+    font-size: 18px;
+    color: #2c3e50;
+    border-bottom: 1px solid #ececec;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+ul.absent li {
+    background-color: #ffe6e6; /* Light red for alternate rows */
+}
+
+ul.absent li:hover {
+    background-color: #ffcccc; /* Highlight on hover */
+    color: #b71c1c;
+}
+
+/* Additional Responses: Change to yellow */
+ul.additional li {
+    background-color: #fffbea; /* Light yellow for alternate rows */
+}
+
+ul.additional li:hover {
+    background-color: #fff3b0; /* Highlight on hover */
+    color: #f57f17;
+}
+
+/* Alternate background for list items */
+ul li:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Hover effect for list items */
+ul li:hover {
+    background-color: #e8f5e9;
+    color: #34495e;
+    cursor: pointer;
+    transform: translateX(5px);
+}
+
+/* Custom bullets for list items */
+ul li.present::before {
+    content: '\2022'; /* Unicode for a bullet point */
+    color: #4CAF50;
+    font-size: 24px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+ul li.absent::before {
+    content: '\2022'; /* Unicode for a bullet point */
+    color: red;
+    font-size: 24px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* Back link styling */
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #4CAF50;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-top: 30px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover and active effects for buttons/links */
+a:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+a:active {
+    background-color: #397d3f;
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Center the back link */
+a[href="/dashboard/"] {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    width: 220px;
+}
+
+/* Page container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    ul li {
+        font-size: 16px;
+    }
+
+    a {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+ /* (Keep your existing styles here) */
+        .download-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #4CAF50;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 6px;
+            margin-top: 30px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn:active {
+            background-color: #397d3f;
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn i {
+            margin-left: 10px; /* Add spacing between the icon and text */
+        }
+        #loader-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        color: white;
+    }
+
+    .loader-content {
+        text-align: center;
+    }
+
+    .spinner {
+        margin: 20px auto;
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-top: 5px solid #ffffff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    footer {
+                background-color: #481153;
+                font-weight:bolder;
+                color: #fff;
+                text-align: center;
+                padding: 5px 5px;
+                height:7%;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+    </style>
+</head>
+<body>
+<video class="background-video" autoplay muted loop>
+        <source src="{% static 'img/animated_bgvideo.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <header>
+        <img src="{% static 'img/klhlogo.png' %}" alt="KL University Logo" class="logo">
+    </header>
+    <!-- Loader Modal -->
+<div id="loader-modal">
+    <div class="loader-content">
+        <h2 id="loader-text">Analysing data...</h2>
+        <div class="spinner"></div>
+    </div>
+</div>
+    <div class="container">
+    <h1>Comparison Report</h1>
+    <!-- Add this section after the comparison content (Present, Absent, Additional IDs) -->
+<a href="{% url 'download_report' topic_id=topic_id %}" class="download-btn">Download Report<i class="fas fa-download"></i></a>
+<div id="attendance-chart" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+    <h2>Present IDs</h2>
+    <div class="count">Total: {{ present_ids|length }}</div>
+    <ul class = "present">
+        {% for id in present_ids %}
+            <li>{{ id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Absent IDs</h2>
+    <div class="count">Total: {{ absent_ids|length }}</div>
+    <ul class="absent">
+        {% for id in absent_ids %}
+            <li>{{ id }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Additional Responses</h2>
+    <div class="count">Total: {{ additional_responses|length }}</div>
+    <ul class="additional">
+        {% for id in additional_responses %}
+            <li>{{ id }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/dashboard/">Back to Attendance</a>
+    </div>
+<footer>
+        <p>Developed by Sayyed Sameer Basir, N. Jahnavi, Mehak Goyal and G Pranav Kumar under the guidance of Dr. Ramakrishna Akella, Principal, KLH Aziznagar Campus in collaboration with KL University Hyderabad</p>
+    </footer>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Extract data from template context
+        const presentCount = {{ present_ids|length }};
+        const absentCount = {{ absent_ids|length }};
+        const additionalCount = {{ additional_responses|length }};
+
+        // Create the chart
+        Highcharts.chart('attendance-chart', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45, // tilt
+                    beta: 0    // rotation
+                },
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                events: {
+            load: function () {
+                // Add watermark text
+                this.renderer.text(
+                    'Image generated by Smart Attendance System ©', // Text
+                    this.plotLeft, // X-coordinate
+                    this.chartHeight - 20 // Y-coordinate
+                )
+                .css({
+                    color: 'rgba(100, 100, 100, 0.5)', // Light grey color
+                    fontSize: '12px',
+                    fontStyle: 'italic'
+                })
+                .add();
+            }
+        }
+            },
+            title: {
+                text: 'Attendance Distribution'
+            },
+            subtitle: {
+                text: 'Present, Absent, and Additional Responses'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.y}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Attendance Share',
+                data: [
+                    { name: 'Present', y: presentCount, color: '#4CAF50' },
+                    { name: 'Absent', y: absentCount, color: '#FF5722' },
+                    { name: 'Additional', y: additionalCount, color: '#2196F3' }
+                ]
+            }]
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const loaderText = document.getElementById("loader-text");
+        const content = document.getElementById("content");
+        const messages = [
+            "Analysing data...",
+            "Comparing data with the server...",
+            "Generating Report...",
+            "Hurray!!!, Report is ready by Smart Attendance System",
+        ];
+
+        let index = 0;
+
+        // Update loader messages every 1.3 seconds
+        const interval = setInterval(() => {
+            index++;
+            if (index < messages.length) {
+                loaderText.textContent = messages[index];
+            }
+        }, 1300);
+
+        // Hide the loader and show content after 4 seconds
+        setTimeout(() => {
+            clearInterval(interval);
+            document.getElementById("loader-modal").style.display = "none";
+            content.style.display = "block";
+        }, 5000);
+    });
+</script>
+
+</body>
+</html>
